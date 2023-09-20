@@ -1,41 +1,60 @@
-using RouteService.API;
-public class Program
-{
-    public static void Main(string[] args)
+using BookingService.Api.Middleware;
+using Microsoft.EntityFrameworkCore;
+using RouteService.Application;
+using RouteService.Persistence;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options => {
+    options.SwaggerDoc("V1", new OpenApiInfo
     {
-        var builder = WebApplication.CreateBuilder(args);
-        var configuration = builder.Configuration;
+        Version = "V1",
+        Title = "RouteService",
+        Description = "RouteService Web Api"
+    });
+});
 
-        ServicesConfiguration.Initialize(configuration);
+builder.Services.AddDbContext<RouteServiceDbContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddApplicationServices();
+builder.Services.AddPersistenceServices();
 
-        builder.Services.AddAppServices();
+var app = builder.Build();
 
-        builder.Services.AddControllers();
-
-        builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwagger();
-        builder.Services.AddHttpContextAccessor();
-
-        var app = builder.Build();
-
-        // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
+{
+    var routeServiceContext = scope.ServiceProvider.GetRequiredService<RouteServiceDbContext>();
+    if (!routeServiceContext.Database.CanConnect())
+    {
+        try
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/V1/swagger.json", "RouteService");
-            });
+            routeServiceContext.Database.Migrate();
         }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthentication();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
-
-        app.Run();
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Migration has failed: {ex.Message}");
+        }
     }
 }
+
+app.UseSwagger();
+app.UseSwaggerUI(options => {
+    options.SwaggerEndpoint("/swagger/V1/swagger.json", "RouteService");
+    options.DefaultModelsExpandDepth(-1);
+});
+
+app.UseCustomExceptionHandler();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

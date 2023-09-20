@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RouteService.Application.Exceptions
+﻿namespace RouteService.Application.Exceptions
 {
-    internal class NotFoundException : Exception
+    public class NotFoundException : Exception
     {
-        public NotFoundException(string message) : base(message)
-        {
-        }
-
-        public NotFoundException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+        public NotFoundException() { }
+        public NotFoundException(string message) : base(message) { }
+        public NotFoundException(string message, Exception inner) : base(message, inner) { }
+        public NotFoundException(string name, object key)
+           : base($"{name} ({key}) is not found") { }
     }
 }

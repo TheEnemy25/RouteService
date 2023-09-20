@@ -1,25 +1,21 @@
-﻿namespace RouteService.Application.Exceptions
+﻿using FluentValidation.Results;
+
+namespace RouteService.Application.Exceptions
 {
-    public class RouteServiceException : Exception
+    public class ValidationException : Exception
     {
-        public int StatusCode { get; set; }
-
-        public RouteServiceException(string message, int code)
-          : base(message)
+        public List<string>? ValidationErrors { get; set; }
+        public ValidationException() { }
+        public ValidationException(string message) : base(message) { }
+        public ValidationException(string message, Exception inner) : base(message, inner) { }
+        public ValidationException(ValidationResult validationResult)
         {
-            StatusCode = code;
+            ValidationErrors = new List<string>();
+
+            foreach (var validationError in validationResult.Errors)
+            {
+                ValidationErrors.Add(validationError.ErrorMessage);
+            }
         }
-
-        public RouteServiceException(string message, Exception innerException, int code)
-            : base(message, innerException)
-        {
-            StatusCode = code;
-        }
-
-        public RouteServiceException(RouteServiceException ex)
-        {
-
-        }
-
     }
 }

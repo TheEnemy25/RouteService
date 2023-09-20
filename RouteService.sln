@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RouteService.Application", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RouteService.Domain", "RouteService.Domain\RouteService.Domain.csproj", "{3990AAA5-0F78-4C01-B248-5B6812831362}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RouteService.Infrastructure", "RouteService.Infrastructure\RouteService.Infrastructure.csproj", "{568454EE-1BF4-4DF3-923E-1E236FB245B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RouteService.Persistence", "RouteService.Persistence\RouteService.Persistence.csproj", "{DD4B3989-774B-471C-BEF1-14D40CECCBC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{3990AAA5-0F78-4C01-B248-5B6812831362}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3990AAA5-0F78-4C01-B248-5B6812831362}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3990AAA5-0F78-4C01-B248-5B6812831362}.Release|Any CPU.Build.0 = Release|Any CPU
-		{568454EE-1BF4-4DF3-923E-1E236FB245B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{568454EE-1BF4-4DF3-923E-1E236FB245B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{568454EE-1BF4-4DF3-923E-1E236FB245B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{568454EE-1BF4-4DF3-923E-1E236FB245B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD4B3989-774B-471C-BEF1-14D40CECCBC5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD4B3989-774B-471C-BEF1-14D40CECCBC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD4B3989-774B-471C-BEF1-14D40CECCBC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD4B3989-774B-471C-BEF1-14D40CECCBC5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
